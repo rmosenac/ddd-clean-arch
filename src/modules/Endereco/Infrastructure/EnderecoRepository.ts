@@ -32,7 +32,7 @@ export class EnderecoRepository{
     async atualizarEndereco(enderco: Endereco) {
 
         // Buscando a posição em que o documento solicitado para autualizar está dentro do array.
-        const indice = EnderecoRepository.enderecos.findIndex(doc => doc.idEndereco === enderco.idEndereco);
+        const indice = EnderecoRepository.enderecos.findIndex(end => end.idEndereco === enderco.idEndereco);
 
         if (indice !== -1) {
             EnderecoRepository.enderecos[indice] = enderco;
