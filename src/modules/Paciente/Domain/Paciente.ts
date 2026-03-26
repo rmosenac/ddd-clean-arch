@@ -1,5 +1,5 @@
-import { Endereco } from "./Endereco";
-import { Usuario } from "./Usuario";
+import { Endereco } from "@/modules/Endereco/Domain/Endereco";
+import { Usuario } from "@/modules/Usuario/Domain/Usuario";
 
 
 export class Paciente extends Usuario {
@@ -18,6 +18,45 @@ export class Paciente extends Usuario {
         this._endereco = endereco;
 
         // this.prontuario = new Prontuario(this);
+    }
+
+    get id(){
+        return super.id;
+    }
+
+    
+    get idade() {
+        return this._idade;
+    }
+
+    get peso() {
+        return this._peso;
+    }
+
+    get altura() {
+        return this._altura;
+    }
+
+    get endereco() {
+        return this._endereco;
+    }
+
+
+    set idade(idade: number) {
+        this._idade = idade;
+    }
+
+    set peso(peso: number) {
+        this._peso = peso;
+    }
+
+
+    set altura(altura: number) {
+        this._altura = altura;
+    }
+
+    set endereco(endereco: Endereco) {
+        this._endereco = endereco;
     }
 
     toString() {
