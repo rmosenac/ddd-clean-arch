@@ -1,6 +1,5 @@
-import { Documento } from "./Documento";
-import { Telefone } from "./Telefone";
-
+import { Documento } from "@/modules/Documento/Domain/Documento";
+import { Telefone } from "@/modules/Telefone/Domain/Telefone";
 
 
 export abstract class Usuario {
