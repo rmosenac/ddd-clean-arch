@@ -18,18 +18,18 @@ export function TelefoneForm({ dadoInicial, onSubmit }: any) {
         }>
             <fieldset>
                 <legend> Telefone </legend>
-                DDD: <input type="text" value={ddd} 
-                onChange={e => setDdd(e.target.value)} /><br />
-                
+                DDD: <input type="text" value={ddd}
+                    onChange={e => setDdd(e.target.value)} /><br />
+
                 Número: <input type="text" value={numeroTelefone}
-                onChange={e => setNumeroTelefone(e.target.value)} /> <br />
+                    onChange={e => setNumeroTelefone(e.target.value)} /> <br />
 
                 Tipo: <input type="text" value={tipoTelefone}
-                onChange={e => setTipoTelefone(e.target.value)} /> <br />
+                    onChange={e => setTipoTelefone(e.target.value)} /> <br />
 
                 Ativo? <input type="checkbox" checked={ativo}
-                onChange={e => setAtivo(e.target.checked)} /> <br />
-                
+                    onChange={e => setAtivo(e.target.checked)} /> <br />
+
                 <button type="submit"> Salvar telefone </button>
             </fieldset>
         </form>
