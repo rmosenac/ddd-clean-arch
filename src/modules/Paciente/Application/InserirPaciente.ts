@@ -2,7 +2,7 @@ import { Endereco } from "@/modules/Endereco/Domain/Endereco";
 import { PacienteRepository } from "../Infrastructure/PacienteRepository";
 import { Paciente } from "../Domain/Paciente";
 
-export class inserirDocumento{
+export class InserirPaciente{
 
     constructor(private repository = new PacienteRepository())
     {}
