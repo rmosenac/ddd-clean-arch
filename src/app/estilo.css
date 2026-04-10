@@ -1,0 +1,117 @@
+/* Reset básico */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* Corpo da página */
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:#f4f4f4;
+    padding:40px;
+}
+
+/* Container geral */
+div{
+    margin-bottom:25px;
+}
+
+/* Título principal */
+h1{
+    text-align:center;
+    margin-bottom:30px;
+    color:#333;
+}
+
+/* Títulos das seções */
+h2{
+    margin-bottom:15px;
+    color:#444;
+}
+
+/* Linha divisória */
+hr{
+    margin:30px 0;
+    border:none;
+    border-top:1px solid #ccc;
+}
+
+/* Formulários */
+form{
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    max-width:400px;
+}
+
+/* Agrupamento de campos */
+form div{
+    margin-bottom:12px;
+}
+
+/* Labels */
+label{
+    display:block;
+    margin-bottom:5px;
+    font-weight:bold;
+    color:#333;
+}
+
+/* Inputs */
+input{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+/* Select */
+select{
+    width:100%;
+    padding:8px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
+
+/* Botões */
+button{
+    margin-top:10px;
+    padding:10px;
+    width:100%;
+    border:none;
+    border-radius:4px;
+    background-color:#0070f3;
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+}
+
+/* Hover do botão */
+button:hover{
+    background-color:#0059c1;
+}
+
+/* Links no formato de botão */
+a{
+    display:inline-block;
+    text-decoration:none;
+    text-align:center;
+
+    margin-top:10px;
+    padding:10px;
+    width:100%;
+
+    border-radius:4px;
+    background-color:#0070f3;
+    color:white;
+
+    font-size:14px;
+    cursor:pointer;
+}
+
+/* Hover igual ao botão */
+a:hover{
+    background-color:#0059c1;
+}

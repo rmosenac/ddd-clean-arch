@@ -10,9 +10,9 @@ import { Paciente } from "../Domain/Paciente";
 
 export function PacienteList() {
 
-    async function carregarPacientes() {
+    const [pacientes, setPacientes] = useState<any[]>([]);
 
-        const [pacientes, setPacientes] = useState<any[]>([]);
+    async function carregarPacientes() {
 
         const uc = new ListarPacientes();
         const lista = await uc.execute();
@@ -20,18 +20,18 @@ export function PacienteList() {
         setPacientes(lista);
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         carregarPacientes();
-    }, []);
+    }, []); // ASSIM QUE CARREGAR A PÁGINA, O USEEFFECT ENTRA EM AÇÃO PARA CARREGAR A LISTA DE PACIENTES
 
 
     async function inserirPaciente(dados: any) {
         const endereco = new Endereco(1, dados.endereco.logradouro, dados.endereco.numero, dados.endereco.bairro, dados.endereco.cidade, dados.endereco.estado);
-        
+
         const uc = new InserirPaciente();
 
         await uc.execute(
-            dados.id, 
+            dados.id,
             dados.nome,
             dados.genero,
             dados.idade,
@@ -53,19 +53,22 @@ export function PacienteList() {
 
         await uc.execute(id);
 
-        await carregarPacientes();  
+        await carregarPacientes();
     }
 
-    return(
-
+    return (
         <div>
 
             <PacienteForm onSubmit={inserirPaciente} />
             <hr />
 
             <h2> LISTA DE PACIENTES: </h2>
-
+            {pacientes.map((p: any) => (
+                <div key={p.id}>
+                    <strong>{p.nome}</strong>
+                    <button onClick={() => removerPaciente(p.id)}> Remover Paciente </button>
+                </div>
+            ))}
         </div>
-
     );
 }

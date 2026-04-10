@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-export function TelefoneForm({ dadoInicial, onSubmit }: any) {
+export function TelefoneFieldset({ dadoInicial, onSubmit }: any) {
 
     const [ddd, setDdd] = useState(dadoInicial?.ddd || "");
     const [numeroTelefone, setNumeroTelefone] = useState(dadoInicial?.numeroTelefone || "");
@@ -29,9 +29,18 @@ export function TelefoneForm({ dadoInicial, onSubmit }: any) {
 
                 Ativo? <input type="checkbox" checked={ativo}
                     onChange={e => setAtivo(e.target.checked)} /> <br />
-
-                <button type="submit"> Salvar telefone </button>
             </fieldset>
         </form>
+    );
+}
+
+export function TelefoneForm() {
+
+    return (
+
+        <div>
+            <TelefoneFieldset />
+            <button type="submit"> Salvar telefone </button>
+        </div>
     );
 }

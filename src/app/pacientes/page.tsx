@@ -1,8 +1,9 @@
+import "@/app/estilo.css"
 import { PacienteList } from "@/modules/Paciente/Components/PacienteList";
 
-export default function PacientesPage(){
+export default function PacientesPage() {
 
-    return(
+    return (
         <div>
             <h1> Página de Pacientes </h1>
             <hr />

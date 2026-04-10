@@ -1,8 +1,8 @@
 "use client"
 
-import { DocumentoForm } from "@/modules/Documento/Components/DocumentoForm";
-import { EnderecoForm } from "@/modules/Endereco/Components/EnderecoForm";
-import { TelefoneForm } from "@/modules/Telefone/Components/TelefoneForm";
+import { DocumentoFieldset, DocumentoForm } from "@/modules/Documento/Components/DocumentoForm";
+import { EnderecoFieldset, EnderecoForm } from "@/modules/Endereco/Components/EnderecoForm";
+import { TelefoneFieldset, TelefoneForm } from "@/modules/Telefone/Components/TelefoneForm";
 import { useState } from "react"
 
 export function PacienteForm({ onSubmit }: any) {
@@ -28,19 +28,19 @@ export function PacienteForm({ onSubmit }: any) {
 
             <hr />
 
-            <DocumentoForm onSubmit={(numeroDocumento: string, tipoDocumento: string) => {
+            <DocumentoFieldset onSubmit={(numeroDocumento: string, tipoDocumento: string) => {
                 setDocumento({ numeroDocumento, tipoDocumento })
             }} />
 
-            <EnderecoForm onSubmit={(logradouro: string, numero: number, bairro: string, cidade: string, estado: string) => {
+            <EnderecoFieldset onSubmit={(logradouro: string, numero: number, bairro: string, cidade: string, estado: string) => {
                 setEndereco({ logradouro, numero, bairro, cidade, estado })
             }} />
 
-            <TelefoneForm onSubmit={(ddd: string, numeroTelefone: string, tipoTelefone: string, ativo: boolean) => {
+            <TelefoneFieldset onSubmit={(ddd: string, numeroTelefone: string, tipoTelefone: string, ativo: boolean) => {
                 setTelefone({ ddd, numeroTelefone, tipoTelefone, ativo })
             }} />
 
-            <button type="submit"> Salvar telefone </button>
+            <button type="submit"> Salvar paciente </button>
 
         </div>
     );

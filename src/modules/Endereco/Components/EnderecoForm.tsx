@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 
-export function EnderecoForm({ dadoInicial, onSubmit }: any) {
+export function EnderecoFieldset({ dadoInicial, onSubmit }: any) {
 
     const [logradouro, setLogradouro] = useState(dadoInicial?.logradouro || "");
     const [numero, setNumero] = useState(dadoInicial?.numero || "");
@@ -33,11 +33,19 @@ export function EnderecoForm({ dadoInicial, onSubmit }: any) {
 
                 Estado: <input type="text" value={estado}
                     onChange={e => setEstado(e.target.value)} /><br />
-
-                <button type="submit"> Salvar endereço </button>
-
             </fieldset>
 
         </form>
+    );
+}
+
+export function EnderecoForm(){
+
+    return(
+
+        <div>
+            <EnderecoFieldset />
+            <button type="submit"> Salvar endereço </button>
+        </div>
     );
 }
