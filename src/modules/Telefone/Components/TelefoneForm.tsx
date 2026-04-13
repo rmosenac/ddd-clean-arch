@@ -1,46 +1,23 @@
 "use client"
 
 import { useState } from "react"
+import { TelefoneFieldset } from "./TelefoneFieldset"
 
-export function TelefoneFieldset({ dadoInicial, onSubmit }: any) {
+export function TelefoneForm({ onSubmit, dadoInicial }: any) {
 
-    const [ddd, setDdd] = useState(dadoInicial?.ddd || "");
-    const [numeroTelefone, setNumeroTelefone] = useState(dadoInicial?.numeroTelefone || "");
-    const [tipoTelefone, setTipoTelefone] = useState(dadoInicial?.tipoTelefone || "");
-    const [ativo, setAtivo] = useState(dadoInicial?.ativo || "");
+    const [telefone, setTelefone] = useState<any>(dadoInicial || {});
 
     return (
-
-        <form onSubmit={async e => {
+        <form onSubmit={async (e) => {
             e.preventDefault();
-            await onSubmit(ddd, numeroTelefone, tipoTelefone, ativo);
-        }
-        }>
-            <fieldset>
-                <legend> Telefone </legend>
-                DDD: <input type="text" value={ddd}
-                    onChange={e => setDdd(e.target.value)} /><br />
+            await onSubmit(telefone);
+        }}>
+            <TelefoneFieldset
+                dadoInicial={dadoInicial}
+                onChange={setTelefone}
+            />
 
-                Número: <input type="text" value={numeroTelefone}
-                    onChange={e => setNumeroTelefone(e.target.value)} /> <br />
-
-                Tipo: <input type="text" value={tipoTelefone}
-                    onChange={e => setTipoTelefone(e.target.value)} /> <br />
-
-                Ativo? <input type="checkbox" checked={ativo}
-                    onChange={e => setAtivo(e.target.checked)} /> <br />
-            </fieldset>
+            <button type="submit">Salvar telefone</button>
         </form>
-    );
-}
-
-export function TelefoneForm() {
-
-    return (
-
-        <div>
-            <TelefoneFieldset />
-            <button type="submit"> Salvar telefone </button>
-        </div>
     );
 }

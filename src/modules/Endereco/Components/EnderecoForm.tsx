@@ -1,51 +1,23 @@
 "use client"
 
 import { useState } from "react"
+import { EnderecoFieldset } from "./EnderecoFieldset"
 
-export function EnderecoFieldset({ dadoInicial, onSubmit }: any) {
+export function EnderecoForm({ onSubmit, dadoInicial }: any) {
 
-    const [logradouro, setLogradouro] = useState(dadoInicial?.logradouro || "");
-    const [numero, setNumero] = useState(dadoInicial?.numero || "");
-    const [bairro, setBairro] = useState(dadoInicial?.bairro || "");
-    const [cidade, setCidade] = useState(dadoInicial?.cidade || "");
-    const [estado, setEstado] = useState(dadoInicial?.estado || "");
+    const [endereco, setEndereco] = useState<any>(dadoInicial || {});
 
     return (
-        <form onSubmit={async e => {
+        <form onSubmit={async (e) => {
             e.preventDefault();
-            await onSubmit(logradouro, numero, bairro, cidade, estado);
-        }
-        } >
+            await onSubmit(endereco);
+        }}>
+            <EnderecoFieldset
+                dadoInicial={dadoInicial}
+                onChange={setEndereco}
+            />
 
-            <fieldset>
-                <legend> Endereço </legend>
-                Logradouro: <input type="text" value={logradouro}
-                    onChange={e => setLogradouro(e.target.value)} /><br />
-
-                Numero: <input type="number" value={numero}
-                    onChange={e => setNumero(e.target.value)} /><br />
-
-                Bairro: <input type="text" value={bairro}
-                    onChange={e => setBairro(e.target.value)} /><br />
-
-                Cidade: <input type="text" value={cidade}
-                    onChange={e => setCidade(e.target.value)} /><br />
-
-                Estado: <input type="text" value={estado}
-                    onChange={e => setEstado(e.target.value)} /><br />
-            </fieldset>
-
+            <button type="submit">Salvar endereço</button>
         </form>
-    );
-}
-
-export function EnderecoForm(){
-
-    return(
-
-        <div>
-            <EnderecoFieldset />
-            <button type="submit"> Salvar endereço </button>
-        </div>
     );
 }

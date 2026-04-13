@@ -1,7 +1,6 @@
 import { Documento } from "@/modules/Documento/Domain/Documento";
 import { Telefone } from "@/modules/Telefone/Domain/Telefone";
 
-
 export abstract class Usuario {
 
     private readonly _id: number;
@@ -10,17 +9,20 @@ export abstract class Usuario {
     private _documento: Documento;
     private _telefones: Telefone[];
 
-
-    constructor(id: number, nome: string, genero: string, idDocumento: number, numeroDocumento: string, tipoDocumento: string) {
+    constructor(
+        id: number,
+        nome: string,
+        genero: string,
+        idDocumento: number,
+        numeroDocumento: string,
+        tipoDocumento: string
+    ) {
         this._id = id;
         this._nome = nome;
         this._genero = genero;
-        this._documento = new Documento(idDocumento, numeroDocumento, tipoDocumento)
-
+        this._documento = new Documento(idDocumento, numeroDocumento, tipoDocumento);
         this._telefones = [];
     }
-
-
 
     get id() {
         return this._id;
@@ -42,17 +44,23 @@ export abstract class Usuario {
         return this._documento.tipoDocumento;
     }
 
-
+    get telefones() {
+        return this._telefones;
+    }
 
     set nome(nome: string) {
+        if (!nome || nome.trim() === "") {
+            throw new Error("Nome inválido");
+        }
         this._nome = nome;
     }
 
     set genero(genero: string) {
+        if (!genero || genero.trim() === "") {
+            throw new Error("Gênero inválido");
+        }
         this._genero = genero;
     }
-
-
 
     atualizarDocumento(numeroDocumento: string, tipoDocumento: string) {
         this._documento.numeroDocumento = numeroDocumento;
@@ -64,10 +72,13 @@ export abstract class Usuario {
     }
 
     removerTelefone(numeroTelefone: string) {
-        this._telefones = this._telefones.filter(telefone => telefone.numeroTelefone = numeroTelefone);
+        this._telefones =
+            this._telefones.filter(
+                telefone => telefone.numeroTelefone !== numeroTelefone
+            );
     }
 
-    toString(){
+    toString() {
         return `
         Id: ${this._id}
         Nome: ${this._nome}

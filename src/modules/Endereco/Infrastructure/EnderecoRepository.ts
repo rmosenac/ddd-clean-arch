@@ -1,43 +1,36 @@
 import { Endereco } from "../Domain/Endereco";
 
-export class EnderecoRepository{
+export class EnderecoRepository {
 
     private static enderecos: Endereco[] = [];
 
-    // LISTAR ENDERECOS:
-    async listarEnderecos(){
+    async listarEnderecos() {
         return EnderecoRepository.enderecos;
     }
 
-
-    // BUSCAR ENDERECO:
-    async buscarEnderecoPorId(idEndereco: number){
-        return EnderecoRepository.enderecos.find(endereco => endereco.idEndereco === idEndereco);
+    async buscarEnderecoPorId(idEndereco: number) {
+        return EnderecoRepository.enderecos
+            .find(endereco => endereco.idEndereco === idEndereco);
     }
 
-
-    // INSERIR NOVO ENDEREÇO
-    async inserirEndereco(endereco: Endereco){
+    async inserirEndereco(endereco: Endereco) {
         EnderecoRepository.enderecos.push(endereco);
     }
 
-
-    // REMOVER ENDEREÇO:
-    async removerEndereco(idEndereco: number){
-        EnderecoRepository.enderecos = EnderecoRepository.enderecos.filter(endereco => endereco.idEndereco !== idEndereco);
+    async removerEndereco(idEndereco: number) {
+        EnderecoRepository.enderecos =
+            EnderecoRepository.enderecos
+                .filter(endereco => endereco.idEndereco !== idEndereco);
     }
 
-
-    // ATUALIZAR ENDEREÇO:
-    async atualizarEndereco(enderco: Endereco) {
-
-        // Buscando a posição em que o documento solicitado para autualizar está dentro do array.
-        const indice = EnderecoRepository.enderecos.findIndex(end => end.idEndereco === enderco.idEndereco);
+    async atualizarEndereco(endereco: Endereco) {
+        const indice = EnderecoRepository.enderecos
+            .findIndex(end => end.idEndereco === endereco.idEndereco);
 
         if (indice !== -1) {
-            EnderecoRepository.enderecos[indice] = enderco;
+            EnderecoRepository.enderecos[indice] = endereco;
         } else {
-            console.log('Endereço não encontrado!');
+            throw new Error("Endereço não encontrado!");
         }
     }
 }

@@ -6,15 +6,19 @@ export class Telefone {
     private _tipoTelefone: string;
     private _ativo: boolean;
 
-    constructor(idTelefone: number, ddd: string, numeroTelefone: string, tipoTelefone: string, ativo: boolean) {
+    constructor(
+        idTelefone: number,
+        ddd: string,
+        numeroTelefone: string,
+        tipoTelefone: string,
+        ativo: boolean
+    ) {
         this._idTelefone = idTelefone;
         this._ddd = ddd;
         this._numeroTelefone = numeroTelefone;
         this._tipoTelefone = tipoTelefone;
         this._ativo = ativo;
     }
-
-
 
     get idTelefone() {
         return this._idTelefone;
@@ -36,25 +40,30 @@ export class Telefone {
         return this._ativo;
     }
 
-
-
     set ddd(ddd: string) {
-        this._ddd = ddd
+        if (!ddd || ddd.trim() === "") {
+            throw new Error("DDD inválido");
+        }
+        this._ddd = ddd;
     }
 
     set numeroTelefone(numeroTelefone: string) {
-        this._numeroTelefone = numeroTelefone
+        if (!numeroTelefone || numeroTelefone.trim() === "") {
+            throw new Error("Número de telefone inválido");
+        }
+        this._numeroTelefone = numeroTelefone;
     }
 
     set tipoTelefone(tipoTelefone: string) {
-        this._tipoTelefone = tipoTelefone
+        if (!tipoTelefone || tipoTelefone.trim() === "") {
+            throw new Error("Tipo de telefone inválido");
+        }
+        this._tipoTelefone = tipoTelefone;
     }
 
     set ativo(ativo: boolean) {
-        this._ativo = ativo
+        this._ativo = ativo;
     }
-
-
 
     toString() {
         return `
