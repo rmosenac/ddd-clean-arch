@@ -1,7 +1,56 @@
+import { pool } from "@/database/database";
 import { Documento } from "../Domain/Documento";
 
 export class DocumentoRepository {
 
+
+    async listarDocumentos() {
+
+        const resultado = await pool.query(
+            `SELECT * FROM documento ORDER BY id_documento`
+        );
+
+        return resultado.rows.map(doc => new Documento(doc._idDocumento, doc.numeroDocumento, doc.tipoDocumento));
+    }
+
+
+
+    async inserirDocumento(documento: Documento) {
+
+        await pool.query(
+            `INSERT INTO documento (id_documento, numero_documento, tipo_documento)
+            VALUES ($1, $2, $3)`,
+            [documento.idDocumento, documento.numeroDocumento, documento.tipoDocumento]
+        );
+    }
+
+
+
+    async buscarDocumentoPorId(idDocumento: number) {
+
+        const resultado = await pool.query(
+            `SELECT * FROM documento WHERE id_documento = $1`, [idDocumento]
+        );
+
+        if(resultado.rows.length === 0){
+            return null;
+        }
+
+        const doc = resultado.rows[0];
+
+        return new Documento(doc._idDocumento, doc.numero_documento, doc.tipo_documento);
+
+    }
+
+
+    
+    async removerDocumento(idDocumento: number) {
+        await pool.query(
+            `DELETE FROM documento WHERE id_documento = $1`, [idDocumento]
+        );
+    }
+
+    /*
     private static documentos: Documento[] = [];
 
     async listarDocumentos() {
@@ -31,4 +80,7 @@ export class DocumentoRepository {
             throw new Error("Documento não encontrado!");
         }
     }
+
+    */
+
 }
