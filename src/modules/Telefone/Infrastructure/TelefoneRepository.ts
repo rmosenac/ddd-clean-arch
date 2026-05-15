@@ -63,6 +63,14 @@ export class TelefoneRepository {
             `DELETE FROM telefone WHERE id_telefone = $1`, [idTelefone]
         );
     }
+
+     async atualizarTelefone(telefone: Telefone) {
+
+        await pool.query(
+            `UPDATE telefone SET ddd = $1, numero_telefone = $2, tipo_telefone = $3, ativo = $4 WHERE id_telefone = $5`, 
+            [telefone.ddd, telefone.numeroTelefone, telefone.tipoTelefone, telefone.ativo, telefone.idTelefone]
+        );
+     }
     
 
     /*
