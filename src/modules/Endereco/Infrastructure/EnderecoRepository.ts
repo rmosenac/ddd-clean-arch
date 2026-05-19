@@ -1,63 +1,143 @@
 import { pool } from "@/database/database";
 import { Endereco } from "../Domain/Endereco";
 
+
 export class EnderecoRepository {
 
 
+    // LISTAR ENDEREÇOS
     async listarEnderecos() {
+
         const resultado = await pool.query(
             `SELECT * FROM endereco ORDER BY id_endereco`
-        )
+        );
 
         return resultado.rows.map(end =>
-            new Endereco(end.id_endereco, end.logradouro, end.numero, end.bairro, end.cidade, end.estado)
+            new Endereco(
+                end.id_endereco,
+                end.logradouro,
+                end.numero,
+                end.bairro,
+                end.cidade,
+                end.estado
+            )
         );
     }
 
 
+
+
+
+    // BUSCAR ENDEREÇO POR ID
     async buscarEnderecoPorId(idEndereco: number) {
 
         const resultado = await pool.query(
-            `SELECT * FROM endereco WHERE id_endereco = $1`, [idEndereco]
+            `
+            SELECT * FROM endereco
+            WHERE id_endereco = $1
+            `,
+            [idEndereco]
         );
 
+        // SE NÃO ENCONTRAR
         if (resultado.rows.length === 0) {
             return null;
         }
 
         const end = resultado.rows[0];
 
-        return new Endereco(end.id_endereco, end.logradouro, end.numero, end.bairro, end.cidade, end.estado);
+        return new Endereco(
+            end.id_endereco,
+            end.logradouro,
+            end.numero,
+            end.bairro,
+            end.cidade,
+            end.estado
+        );
     }
 
 
+
+
+
+    // INSERIR ENDEREÇO
     async inserirEndereco(endereco: Endereco) {
 
         await pool.query(
-            `ÌNSERT INTO endereco (id_endereco, logradouro, numero, bairro, cidade, estado)
-            VALUES ($1, $2, $3, $4, $5, $6)`, [endereco.idEndereco, endereco.logradouro, endereco.numero, endereco.bairro, endereco.cidade, endereco.estado]
+            `
+            INSERT INTO endereco
+            (
+                id_endereco,
+                logradouro,
+                numero,
+                bairro,
+                cidade,
+                estado
+            )
+            VALUES ($1, $2, $3, $4, $5, $6)
+            `,
+            [
+                endereco.idEndereco,
+                endereco.logradouro,
+                endereco.numero,
+                endereco.bairro,
+                endereco.cidade,
+                endereco.estado
+            ]
         );
     }
 
 
+
+
+
+    // REMOVER ENDEREÇO
     async removerEndereco(idEndereco: number) {
 
         await pool.query(
-            `DELETE FROM endereco WHERE id_endereco = $1`, [idEndereco]
+            `
+            DELETE FROM endereco
+            WHERE id_endereco = $1
+            `,
+            [idEndereco]
         );
-
     }
 
 
+
+
+
+    // ATUALIZAR ENDEREÇO
     async atualizarEndereco(endereco: Endereco) {
 
         await pool.query(
-            `UPDATE endereco SET logradouro = $1, numero = $2, bairro = $3, cidade = $4, estado = $5 WHERE id_endereco = $6`,
-            [endereco.logradouro, endereco.numero, endereco.bairro, endereco.cidade, endereco.estado, endereco.idEndereco]
+            `
+            UPDATE endereco
+            SET
+                logradouro = $1,
+                numero = $2,
+                bairro = $3,
+                cidade = $4,
+                estado = $5
+            WHERE id_endereco = $6
+            `,
+            [
+                endereco.logradouro,
+                endereco.numero,
+                endereco.bairro,
+                endereco.cidade,
+                endereco.estado,
+                endereco.idEndereco
+            ]
         );
     }
 
 
+
+
+
+    // EXEMPLO RODANDO EM MEMÓRIA ATRAVÉS DE ARRAYS:
+    
     /*
     private static enderecos: Endereco[] = [];
 

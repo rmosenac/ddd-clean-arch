@@ -1,65 +1,125 @@
+
 import { pool } from "@/database/database";
 import { Documento } from "../Domain/Documento";
+
 
 export class DocumentoRepository {
 
 
+    // LISTAR DOCUMENTOS
     async listarDocumentos() {
 
         const resultado = await pool.query(
             `SELECT * FROM documento ORDER BY id_documento`
         );
 
-        return resultado.rows.map(doc => new Documento(doc.id_documento, doc.numero_documento, doc.tipo_documento));
+        return resultado.rows.map(doc =>
+            new Documento(
+                doc.id_documento,
+                doc.numero_documento,
+                doc.tipo_documento
+            )
+        );
     }
 
 
 
+
+
+    // INSERIR DOCUMENTO
     async inserirDocumento(documento: Documento) {
 
         await pool.query(
-            `INSERT INTO documento (id_documento, numero_documento, tipo_documento)
-            VALUES ($1, $2, $3)`,
-            [documento.idDocumento, documento.numeroDocumento, documento.tipoDocumento]
+            `
+            INSERT INTO documento
+            (
+                id_documento,
+                numero_documento,
+                tipo_documento
+            )
+            VALUES ($1, $2, $3)
+            `,
+            [
+                documento.idDocumento,
+                documento.numeroDocumento,
+                documento.tipoDocumento
+            ]
         );
     }
 
 
 
+
+
+    // BUSCAR DOCUMENTO POR ID
     async buscarDocumentoPorId(idDocumento: number) {
 
         const resultado = await pool.query(
-            `SELECT * FROM documento WHERE id_documento = $1`, [idDocumento]
+            `
+            SELECT * FROM documento
+            WHERE id_documento = $1
+            `,
+            [idDocumento]
         );
 
+        // SE NÃO ENCONTRAR
         if (resultado.rows.length === 0) {
             return null;
         }
 
         const doc = resultado.rows[0];
 
-        return new Documento(doc.id_documento, doc.numero_documento, doc.tipo_documento);
-
+        return new Documento(
+            doc.id_documento,
+            doc.numero_documento,
+            doc.tipo_documento
+        );
     }
 
 
 
+
+
+    // REMOVER DOCUMENTO
     async removerDocumento(idDocumento: number) {
+
         await pool.query(
-            `DELETE FROM documento WHERE id_documento = $1`, [idDocumento]
+            `
+            DELETE FROM documento
+            WHERE id_documento = $1
+            `,
+            [idDocumento]
         );
     }
 
 
 
+
+
+    // ATUALIZAR DOCUMENTO
     async atualizarDocumento(documento: Documento) {
+
         await pool.query(
-            `UPDATE documento SET numero_documento = $1, tipo_documento = $2 WHERE id_documento = $3`,
-            [documento.numeroDocumento, documento.tipoDocumento, documento.idDocumento]
+            `
+            UPDATE documento
+            SET
+                numero_documento = $1,
+                tipo_documento = $2
+            WHERE id_documento = $3
+            `,
+            [
+                documento.numeroDocumento,
+                documento.tipoDocumento,
+                documento.idDocumento
+            ]
         );
     }
 
-    
+
+
+
+
+    // EXEMPLO RODANDO EM MEMÓRIA ATRAVÉS DE ARRAYS:
 
     /*
     private static documentos: Documento[] = [];

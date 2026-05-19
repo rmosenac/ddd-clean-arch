@@ -1,8 +1,11 @@
 import { pool } from "@/database/database";
 import { Telefone } from "../Domain/Telefone";
 
+
 export class TelefoneRepository {
 
+
+    // LISTAR TELEFONES
     async listarTelefones() {
 
         const resultado = await pool.query(
@@ -10,32 +13,60 @@ export class TelefoneRepository {
         );
 
         return resultado.rows.map(tel =>
-            new Telefone(tel.id_telefone, tel.ddd, tel.numero_telefone, tel.tipo_telefone, tel.ativo)
+            new Telefone(
+                tel.id_telefone,
+                tel.ddd,
+                tel.numero_telefone,
+                tel.tipo_telefone,
+                tel.ativo
+            )
         );
     }
 
 
+
+
+
+    // BUSCAR TELEFONE POR ID
     async buscarTelefonePorId(idTelefone: number) {
 
         const resultado = await pool.query(
-            `SELECT * FROM telefone WHERE id_telefone = $1`[idTelefone]
+            `
+            SELECT * FROM telefone
+            WHERE id_telefone = $1
+            `,
+            [idTelefone]
         );
 
+        // SE NÃO ENCONTRAR
         if (resultado.rows.length === 0) {
             return null;
         }
 
         const tel = resultado.rows[0];
 
-        return new Telefone(tel.id_telefone, tel.ddd, tel.numero_telefone, tel.tipo_telefone, tel.ativo);
+        return new Telefone(
+            tel.id_telefone,
+            tel.ddd,
+            tel.numero_telefone,
+            tel.tipo_telefone,
+            tel.ativo
+        );
     }
 
 
 
+
+
+    // BUSCAR TELEFONE POR NÚMERO
     async buscarTelefonePorNumero(numeroTelefone: string) {
 
         const resultado = await pool.query(
-            `SELECT * FROM telefone WHERE numero_telefone = $1`, [numeroTelefone]
+            `
+            SELECT * FROM telefone
+            WHERE numero_telefone = $1
+            `,
+            [numeroTelefone]
         );
 
         if (resultado.rows.length === 0) {
@@ -44,34 +75,92 @@ export class TelefoneRepository {
 
         const tel = resultado.rows[0];
 
-        return new Telefone(tel.id_telefone, tel.ddd, tel.numero_telefone, tel.tipo_telefone, tel.ativo);
+        return new Telefone(
+            tel.id_telefone,
+            tel.ddd,
+            tel.numero_telefone,
+            tel.tipo_telefone,
+            tel.ativo
+        );
     }
 
 
+
+
+
+    // INSERIR TELEFONE
     async inserirTelefone(telefone: Telefone) {
 
         await pool.query(
-            `INSERT INTO telefone (id_telefone, ddd, numero_telefone, tipo_telefone, ativo)
-            VALUES ($1, $2, $3, $4, $5)`, [telefone.idTelefone, telefone.ddd, telefone.numeroTelefone, telefone.tipoTelefone, telefone.ativo]
+            `
+            INSERT INTO telefone
+            (
+                id_telefone,
+                ddd,
+                numero_telefone,
+                tipo_telefone,
+                ativo
+            )
+            VALUES ($1, $2, $3, $4, $5)
+            `,
+            [
+                telefone.idTelefone,
+                telefone.ddd,
+                telefone.numeroTelefone,
+                telefone.tipoTelefone,
+                telefone.ativo
+            ]
         );
     }
 
 
+
+
+
+    // REMOVER TELEFONE
     async removerTelefone(idTelefone: number) {
-    
+
         await pool.query(
-            `DELETE FROM telefone WHERE id_telefone = $1`, [idTelefone]
+            `
+            DELETE FROM telefone
+            WHERE id_telefone = $1
+            `,
+            [idTelefone]
         );
     }
 
-     async atualizarTelefone(telefone: Telefone) {
+
+
+
+
+    // ATUALIZAR TELEFONE
+    async atualizarTelefone(telefone: Telefone) {
 
         await pool.query(
-            `UPDATE telefone SET ddd = $1, numero_telefone = $2, tipo_telefone = $3, ativo = $4 WHERE id_telefone = $5`, 
-            [telefone.ddd, telefone.numeroTelefone, telefone.tipoTelefone, telefone.ativo, telefone.idTelefone]
+            `
+            UPDATE telefone
+            SET
+                ddd = $1,
+                numero_telefone = $2,
+                tipo_telefone = $3,
+                ativo = $4
+            WHERE id_telefone = $5
+            `,
+            [
+                telefone.ddd,
+                telefone.numeroTelefone,
+                telefone.tipoTelefone,
+                telefone.ativo,
+                telefone.idTelefone
+            ]
         );
-     }
-    
+    }
+
+
+
+
+
+    // EXEMPLO RODANDO EM MEMÓRIA ATRAVÉS DE ARRAYS:
 
     /*
     private static telefones: Telefone[] = [];

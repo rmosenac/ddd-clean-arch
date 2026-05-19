@@ -15,13 +15,30 @@ export function PacienteList() {
     const [contadorId, setContadorId] = useState(1);
     const [pacienteEdicao, setPacienteEdicao] = useState<any>(null);
 
+
+
+
+
+    async function carregarPacientes() {
+
+        const response = await fetch("/api/pacientes");
+
+        const lista = await response.json();
+
+        setPacientes([...(lista || [])]);
+    }
+
+
+    /*
+    MESMO MÉTODO, PORÉM COM CARREGAMENTO:
+
     async function carregarPacientes() {
 
         // CHAMANDO A CLASSE LÁ DO PACOTE APPLICATION ATRAVÉS DESSA VARIÁVEL UC
         const uc = new ListarPacientes();
         const lista = await uc.execute();
 
-        /*
+        
         CHAMADO DE SPREAD OPERATOR, OS "..." NADA MAIS É DO QUE A SOLICITAÇÃO DE UMA CÓPIA
         DE UM ARRAY.
 
@@ -32,9 +49,14 @@ export function PacienteList() {
         
         POR ISSO A EXPRESSÃO "..." PASSA UMA CÓPIA DA LISTA PARA A VARIÁVEL "SETPACIENTES". ESSA CÓPIA
         PODE SER UMA LISTA COM ITENS "OU" UM ARRAY VAZIO (REPRESENTADO PELOS []);
-         */
+         
         setPacientes([...(lista || [])]);
     }
+
+    */
+
+
+
 
 
     /*
@@ -45,6 +67,50 @@ export function PacienteList() {
     useEffect(() => {
         carregarPacientes();
     }, []);
+
+
+
+
+
+    async function salvarPaciente(dados: any) {
+
+        try {
+
+            const metodo = dados.id ? "PUT" : "POST";
+
+            await fetch("/api/pacientes", {
+
+                method: metodo,
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    ...dados,
+                    id: dados.id || contadorId
+                })
+            });
+
+            if (!dados.id) {
+                setContadorId(contadorId + 1);
+            }
+
+            setPacienteEdicao(null);
+
+            await carregarPacientes();
+
+        } catch (error) {
+
+            console.log(error);
+
+            alert("Erro ao salvar paciente!");
+        }
+    }
+
+
+    /*
+    MESMO MÉTODO, PORÉM COM CARREGAMENTO:
 
     async function salvarPaciente(dados: any) {
 
@@ -59,16 +125,16 @@ export function PacienteList() {
                 dados.endereco.estado
             );
 
-            /*
+            
             PRIMEIRAMENTE, O CÓDIGO ANALISA A EXISTÊNCIA DE UM ID. ISSO FAZ COM QUE ELE SAIBA QUE
             O PACIENTE EXISTE NO SISTEMA.
-            */
+            
 
 
-            /*
+            
             CASO EXISTA O PACIENTE JÁ CADASTRADO (NA LISTAGEM DA PÁGINA), ELE SERÁ ENCAMINHADO PARA
             A EDIÇÃO (ISSO OCORRE QUANDO APERTA O BOTÃO "EDITAR PACIENTE")
-            */
+            
             if (dados.id) {
 
                 // CHAMANDO A CLASSE LÁ DO PACOTE APPLICATION ATRAVÉS DESSA VARIÁVEL UC
@@ -89,10 +155,10 @@ export function PacienteList() {
                 setPacienteEdicao(null);
 
 
-                /*
+                
                 CASO AINDA NÃO EXISTA O PACIENTE CADASTRADO NO SISTEMA (NA LISTAGEM DA PÁGINA), AO PREENCHER
                 OS DADOS E APERTAR (SALVAR PACIENTE), ELE SERÁ EXIBIDO NA LISTA
-                */
+                
             } else {
 
                 // CHAMANDO A CLASSE LÁ DO PACOTE APPLICATION ATRAVÉS DESSA VARIÁVEL UC
@@ -117,11 +183,11 @@ export function PacienteList() {
             await carregarPacientes();
 
 
-            /*
+            
             CASO OCORRA ALGUM PROBLEMA NA INSERÇÃO DO PACIENTE, O SISTEMA CAPTURA O ERRO E LANÇA NO
             TERMINAL. TAMBÉM IRÁ ALERTAR NA TELA COM OU POPUP DIZENDO QUE HOUVE UM ERRO!
             o PROGRAMADOR DEVE VERIFICAR O TERMINAL PARA OBSERVAR O ERRO QUE OCORREU.
-            */
+            
         } catch (error) {
             console.log(error);
             alert('Erro ao salvar paciente!');
@@ -129,10 +195,37 @@ export function PacienteList() {
 
     }
 
+    */
+
+
+
+
+
+    async function removerPaciente(id: number) {
+
+        await fetch("/api/pacientes", {
+
+            method: "DELETE",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({ id })
+        });
+
+        await carregarPacientes();
+    }
+
+
     /*
     ESSA É A FUNÇÃO ACIONADA NO BOTÃO REMOVER PACIENTE, QUE EXISTE NA LISTAGEM PARA CADA PACIENTE.
     ELA É ASSÍNCRONA, POIS REQUER PROCESSAMENTO
     */
+
+    /*
+    MESMO MÉTODO, PORÉM COM CARREGAMENTO:
+
     async function removerPaciente(id: number) {
 
         // CHAMANDO A CLASSE LÁ DO PACOTE APPLICATION ATRAVÉS DESSA VARIÁVEL UC
@@ -142,7 +235,7 @@ export function PacienteList() {
 
         await carregarPacientes();
     }
-
+    */
 
     /*
     ESSA É A FUNÇÃO ACIONADA NO BOTÃO EDITAR PACIENTE, QUE EXISTE NA LISTAGEM PARA CADA PACIENTE.
